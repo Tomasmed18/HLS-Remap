@@ -1,8 +1,8 @@
 #include "xf_remap_config.h"
 
-void dilation_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src,xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst, unsigned char kernel[FILTER_SIZE*FILTER_SIZE]);
+void remap_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src,xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst);
 
-void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1,1,1> >& _dst,int height,int width, unsigned char kernel[FILTER_SIZE*FILTER_SIZE])
+void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1,1,1> >& _dst,int height,int width)
 {
 #pragma HLS INTERFACE axis register both  port=_src
 #pragma HLS INTERFACE axis register both  port=_dst
@@ -16,9 +16,9 @@ void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1
 
 	xf::AXIvideo2xfMat(_src, imgInput1);
 
-	 dilation_accel(imgInput1,imgOutput1, kernel);
+	 //remap_accel(imgInput1,imgOutput1, kernel);
 
-	xf::xfMat2AXIvideo(imgOutput1, _dst);
+	xf::xfMat2AXIvideo(imgInput1, _dst);
 
 
 }

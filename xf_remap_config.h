@@ -46,15 +46,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /*  define the input and output types  */
-#if NO
 #define NPC1 XF_NPPC1
-#endif
 
-#if RO
-#define NPC1 XF_NPPC8
-#endif
 
 #define TYPE XF_8UC1
 
-void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1,1,1> >& _dst,int height,int width,unsigned char kernel[FILTER_SIZE*FILTER_SIZE] );
+void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1,1,1> >& _dst,int height,int width);
 #endif // _XF_DILATION_CONFIG_H_

@@ -43,42 +43,19 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	cv::Mat out_img,ocv_ref;
-	cv::Mat in_img,in_img1,diff;
+	cv::Mat in_img;
 
 	// reading in the color image
-	in_img = cv::imread(argv[1], 0);
+	in_img = cv::imread(argv[1], cv::IMREAD_GRAYSCALE);
 	if (in_img.data == NULL)
 	{
 		fprintf(stderr,"Cannot open image at %s\n", argv[1]);
 		return 0;
 	}
-	// create memory for output images
-	ocv_ref.create(in_img.rows,in_img.cols,CV_8UC1);
-	diff.create(in_img.rows,in_img.cols,CV_8UC1);
-	in_img1.create(in_img.rows,in_img.cols,CV_8UC1);
 
 	uint16_t height = in_img.rows;
 	uint16_t width = in_img.cols;
 
-
-
-	///////////////// 	Opencv  Reference  ////////////////////////
-	cv::Mat element = cv::getStructuringElement( 0,cv::Size(3, 3), cv::Point(-1, -1));
-	cv::dilate(in_img, ocv_ref, element, cv::Point(-1, -1), 1, cv::BORDER_CONSTANT);
-	cv::imwrite("out_ocv.jpg", ocv_ref);
-
-	#if __SDSCC__
-	unsigned char *structure_element=(unsigned char *)sds_alloc_non_cacheable(sizeof(unsigned char)*FILTER_SIZE*FILTER_SIZE);
-	#else
-	unsigned char structure_element[FILTER_SIZE*FILTER_SIZE];
-	#endif
-
-
-	for(int i=0;i<(FILTER_SIZE*FILTER_SIZE);i++)
-	{
-		structure_element[i]=element.data[i];
-	}
 
 	hls::stream< ap_axiu<8,1,1,1> > _src,_dst;
 
@@ -89,7 +66,7 @@ int main(int argc, char** argv)
 
 	cvMat2AXIvideoxf<NPC1>(in_img, _src);
 
-	ip_accel_app(_src, _dst,height,width, structure_element);
+	ip_accel_app(_src, _dst,height,width);
 
 	AXIvideo2cvMatxf<NPC1>(_dst, in_img1);
 
@@ -98,35 +75,7 @@ int main(int argc, char** argv)
 	uint64_t hw_cycles = hw_ctr.avg_cpu_cycles();
 	#endif
 
-	cv::imwrite("hls.jpg", in_img1);
-	//////////////////  Compute Absolute Difference ////////////////////
-
-	cv::absdiff(ocv_ref, in_img1, diff);
-	cv::imwrite("out_error.jpg", diff);
-
-	// Find minimum and maximum differences.
-		double minval=256,maxval=0;
-	int cnt = 0;
-	for (int i=0; i<in_img.rows; i++)
-	{
-		for(int j=0; j<in_img.cols; j++)
-		{
-			uchar v = diff.at<uchar>(i,j);
-			if (v>0)
-				cnt++;
-			if (minval > v)
-				minval = v;
-			if (maxval < v)
-				maxval = v;
-		}
-	}
-
-	float err_per = 100.0*(float)cnt/(in_img.rows*in_img.cols);
-	fprintf(stderr,"Minimum error in intensity = %f\n Maximum error in intensity = %f\n Percentage of pixels above error threshold = %f\n",minval,maxval,err_per);
-
-	if(err_per > 0.0f)
-		return 1;
-
+	cv::imwrite("hls_out.jpg", in_img1);
 
 	return 0;
 
