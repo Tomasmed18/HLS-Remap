@@ -1,1 +1,5 @@
-vivado_hls.log\nremap_xf_hls/
+data/*
+
+remap_xf_hls/*
+vivado_hls.log
+testcase55.jpg
