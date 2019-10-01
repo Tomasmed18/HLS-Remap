@@ -30,10 +30,32 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "xf_remap_config.h"
 
+void init_map_1(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
+	float f_val = 0.0;
+	for(int i= 0; i < HEIGHT * WIDTH; i++){
+		map.write_float(i, f_val);
+		f_val += 1.0;
+		if (f_val > 1080.0)
+			f_val = 0.0;
+	}
+}
+void init_map_2(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
+	float f_val = 0.0;
+	for(int i= 0; i < HEIGHT * WIDTH; i++){
+			map.write_float(i, f_val);
+			f_val += 1.0;
+			if (f_val > 1920.0)
+				f_val = 0.0;
+	}
+}
+
 void remap_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src,xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst)
 {
+	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_1(HEIGHT, WIDTH);
+	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_2(HEIGHT, WIDTH);
+	init_map_1(map_1);
+	init_map_2(map_2);
 
-
-	//xf::dilate<XF_BORDER_REPLICATE, TYPE ,HEIGHT, WIDTH, KERNEL_SHAPE, FILTER_SIZE, FILTER_SIZE, ITERATIONS, NPC1>(_src, _dst, kernel);
+	xf::remap<2, XF_INTERPOLATION_BILINEAR , TYPE, XF_32FC1, TYPE, HEIGHT, WIDTH, NPC1, false>(_src, _dst, map_1, map_2);
 
 }

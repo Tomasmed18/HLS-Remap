@@ -44,6 +44,7 @@ int main(int argc, char** argv)
 	}
 
 	cv::Mat in_img;
+	cv::Mat out_img;
 
 	// reading in the color image
 	in_img = cv::imread(argv[1], cv::IMREAD_GRAYSCALE);
@@ -52,6 +53,7 @@ int main(int argc, char** argv)
 		fprintf(stderr,"Cannot open image at %s\n", argv[1]);
 		return 0;
 	}
+	out_img.create(in_img.rows,in_img.cols,CV_8UC1);
 
 	uint16_t height = in_img.rows;
 	uint16_t width = in_img.cols;
@@ -66,16 +68,16 @@ int main(int argc, char** argv)
 
 	cvMat2AXIvideoxf<NPC1>(in_img, _src);
 
-	ip_accel_app(_src, _dst,height,width);
+	ip_accel_app(_src, _dst, height, width);
 
-	AXIvideo2cvMatxf<NPC1>(_dst, in_img1);
+	AXIvideo2cvMatxf<NPC1>(_dst, out_img);
 
 	#if __SDSCC__
 	hw_ctr.stop();
 	uint64_t hw_cycles = hw_ctr.avg_cpu_cycles();
 	#endif
 
-	cv::imwrite("hls_out.jpg", in_img1);
+	cv::imwrite("hls_out.jpg", out_img);
 
 	return 0;
 

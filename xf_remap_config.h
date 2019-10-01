@@ -36,13 +36,14 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "common/xf_common.h"
 #include "common/xf_utility.h"
 #include "common/xf_infra.h"
-#include "imgproc/xf_dilation.hpp"
+#include "imgproc/xf_remap.hpp"
+#include "imgproc/xf_stereo_pipeline.hpp" //for InitUndistortRectifyMapInverse
 #include "xf_config_params.h"
 
 
 /* config width and height */
-#define WIDTH 	3840
-#define HEIGHT	2160
+#define WIDTH 	1920
+#define HEIGHT	1080
 
 
 /*  define the input and output types  */
