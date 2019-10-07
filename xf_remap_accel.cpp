@@ -29,33 +29,26 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include "xf_remap_config.h"
+#include "xf_read_map_value.h"
 
-void init_map_1(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
-	float f_val = 0.0;
+void init_map_x(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
 	for(int i= 0; i < HEIGHT * WIDTH; i++){
-		map.write_float(i, f_val);
-		f_val += 1.0;
-		if (f_val > 1080.0)
-			f_val = 0.0;
+		map.write_float(i, read_map_x_value(i));
 	}
 }
-void init_map_2(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
-	float f_val = 0.0;
+void init_map_y(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
 	for(int i= 0; i < HEIGHT * WIDTH; i++){
-			map.write_float(i, f_val);
-			f_val += 1.0;
-			if (f_val > 1920.0)
-				f_val = 0.0;
+		map.write_float(i, read_map_y_value(i));
 	}
 }
 
 void remap_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src,xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst)
 {
-	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_1(HEIGHT, WIDTH);
-	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_2(HEIGHT, WIDTH);
-	init_map_1(map_1);
-	init_map_2(map_2);
+	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_x(HEIGHT, WIDTH);
+	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_y(HEIGHT, WIDTH);
+	init_map_x(map_x);
+	init_map_y(map_y);
 
-	xf::remap<2, XF_INTERPOLATION_BILINEAR , TYPE, XF_32FC1, TYPE, HEIGHT, WIDTH, NPC1, false>(_src, _dst, map_1, map_2);
+	xf::remap<REMAP_WIN_ROWS, XF_INTERPOLATION_BILINEAR , TYPE, XF_32FC1, TYPE, HEIGHT, WIDTH, NPC1, false>(_src, _dst, map_x, map_y);
 
 }
