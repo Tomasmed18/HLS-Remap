@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 
 	cvMat2AXIvideoxf<NPC1>(in_img, _src);
 
-	ip_accel_app(_src, _dst, height, width);
+	ip_accel_app(_src, _dst);
 
 	AXIvideo2cvMatxf<NPC1>(_dst, out_img);
 
