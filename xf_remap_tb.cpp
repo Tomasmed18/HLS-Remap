@@ -28,7 +28,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 
-
+#include "common/xf_sw_utils.h"
 
 #include "xf_headers.h"
 #include "xf_remap_config.h"

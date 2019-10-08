@@ -42,10 +42,10 @@ void init_map_y(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
 	}
 }
 
-void remap_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src,xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst)
+void remap_accel(xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_src, xf::Mat<TYPE, HEIGHT, WIDTH, NPC1> &_dst)
 {
-	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_x(HEIGHT, WIDTH);
-	static xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_y(HEIGHT, WIDTH);
+	 xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_x(HEIGHT, WIDTH);
+	 xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> map_y(HEIGHT, WIDTH);
 	init_map_x(map_x);
 	init_map_y(map_y);
 

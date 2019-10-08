@@ -31,9 +31,9 @@
 #define _XF_HEADERS_H_
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdint.h>
 #include "ap_int.h"
 #include "hls_stream.h"
 
@@ -59,7 +59,7 @@
 #define TIME_STAMP  { clock_end = sds_clock_counter(); printf("elapsed time %lu \n", clock_end-clock_start); clock_start = sds_clock_counter();  }
 #endif
 
-#include "common/xf_sw_utils.h"
+
 #include "common/xf_axi.h"
 
 #endif//_XF_HEADERS_H_
