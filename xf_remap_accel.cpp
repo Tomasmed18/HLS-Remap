@@ -29,7 +29,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include "xf_remap_config.h"
-#include "xf_read_map_value.h"
+//#include "xf_read_map_value.h"
+#include "xf_read_map_value_640x360.h"
 
 void init_map_x(xf::Mat<XF_32FC1, HEIGHT, WIDTH, NPC1> & map){
 	for(int i= 0; i < HEIGHT * WIDTH; i++){

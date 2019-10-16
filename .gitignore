@@ -1,6 +1,9 @@
 data/*
-
+photos_pattern/*
+photos_pattern_2/*
 remap_xf_hls/*
 vivado_hls.log
 testcase55.jpg
 IMG2.png
+IMG2-resized.png
+22.png

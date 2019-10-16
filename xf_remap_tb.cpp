@@ -28,7 +28,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 
-#include "common/xf_sw_utils.h"
+//#include "common/xf_sw_utils.h"
 
 #include "xf_headers.h"
 #include "xf_remap_config.h"
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 		fprintf(stderr,"Cannot open image at %s\n", argv[1]);
 		return 0;
 	}
-	out_img.create(in_img.rows,in_img.cols,CV_8UC1);
+	out_img.create(HEIGHT, WIDTH,CV_8UC1);
 
 	uint16_t height = in_img.rows;
 	uint16_t width = in_img.cols;
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 	uint64_t hw_cycles = hw_ctr.avg_cpu_cycles();
 	#endif
 
-	cv::imwrite("hls_out.jpg", out_img);
+	cv::imwrite("hls_out.png", out_img);
 
 	return 0;
 
