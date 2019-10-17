@@ -37,7 +37,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "common/xf_utility.h"
 #include "common/xf_infra.h"
 #include "imgproc/xf_remap.hpp"
-#include "imgproc/xf_resize.hpp"
+//#include "imgproc/xf_resize.hpp"
+#include "imgproc/xf_stereo_pipeline.hpp"
 #include "xf_config_params.h"
 
 
@@ -46,8 +47,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define WIDTH 	640
 #define HEIGHT	360
 
-#define ORIGINAL_WIDTH 1920
-#define ORIGINAL_HEIGHT 1080
+//#define ORIGINAL_WIDTH 1920
+//#define ORIGINAL_HEIGHT 1080
 
 /*  define the input and output types  */
 #define NPC1 XF_NPPC1
@@ -55,7 +56,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #define MAX_DOWN_SCALE 3
-#define REMAP_WIN_ROWS 64
+#define REMAP_WIN_ROWS 128
 
 void ip_accel_app(hls::stream< ap_axiu<8,1,1,1> >& _src,hls::stream< ap_axiu<8,1,1,1> >& _dst);
 #endif // _XF_DILATION_CONFIG_H_
